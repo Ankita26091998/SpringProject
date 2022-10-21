@@ -1,0 +1,37 @@
+package com.spring.demo;
+
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class ProductController {
+
+	@GetMapping("/productDetails")
+	public List<Product> getProductDetails() {
+		return ProductService.getProductData();
+	}
+
+	@GetMapping("/productdetailsbyid/{id}")
+	public Product getProductDetailsById(@PathVariable int productId) {
+		return ProductService.getProductDataById(productId);
+	}
+//	
+//	@GetMapping("/productdetailbyid")
+//	public Product getProductById(@RequestParam("productId") int productId) {
+//		return ProductService.getProductById(productId);
+//	}
+
+//	@GetMapping("/productdetailsbyName")
+//	public Product getProductDetailsByName(@RequestParam("productName") String name){
+//		return ProductService.getProductDataByName(name);}
+
+	@PostMapping("/addproduct")
+	public Product getProductById(@RequestBody Product p) {
+		return ProductService.addProduct(p);
+	}
+}

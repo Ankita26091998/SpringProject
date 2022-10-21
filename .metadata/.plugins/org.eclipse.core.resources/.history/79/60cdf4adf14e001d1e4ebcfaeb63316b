@@ -1,0 +1,47 @@
+package com.example.demo.service;
+
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.entity.Course;
+import com.example.demo.repository.CourseRepository;
+
+@Service
+@Transactional
+public class CourseService 
+{
+ @Autowired
+    private CourseRepository courseRepository;
+ 
+ 
+ public List<Course> displayCourses() {
+        return courseRepository.findAll();
+    }
+     
+    public void addCourse(Course course) {
+    	courseRepository.save(course);
+    }
+    
+    public Course getCourseById(int courseId) {
+        return courseRepository.findById(courseId).get();
+    }
+    
+    
+
+    public void deleteCourse(int courseId) {
+    	courseRepository.deleteById(courseId);
+    }
+
+    public Course updateCourse(int courseId,Course course) {
+    	course.setCourseId(courseId);
+		return courseRepository.save(course);
+
+
+}
+
+}
+

@@ -1,0 +1,49 @@
+package com.spring.demo;
+
+import java.util.List;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class ProductController {
+
+	@GetMapping("/productDetails")
+	public List<Product> getProductDetails() {
+		return ProductService.getProductData();
+	}
+
+	@GetMapping("/productdetailsbyid/{id}")
+	public Product getProductDetailsById(@PathVariable int productId) {
+		return ProductService.getProductDataById(productId);
+	}
+//	
+//	@GetMapping("/productdetailbyid")
+//	public Product getProductById(@RequestParam("productId") int productId) {
+//		return ProductService.getProductById(productId);
+//	}
+
+//	@GetMapping("/productdetailsbyName")
+//	public Product getProductDetailsByName(@RequestParam("productName") String name){
+//		return ProductService.getProductDataByName(name);}
+
+	@PostMapping("/addproduct")
+	public Product addProductData(@RequestBody Product p) {
+		return ProductService.addProduct(p);
+	}
+
+	@PutMapping("/updateproduct/{productId}")
+	public Product updateProduct(@RequestBody Product p, @PathVariable int productId) {
+		return ProductService.updateProduct(productId, p);
+	}
+
+	@DeleteMapping("/deleteproduct/{productId}")
+	public void deleteProduct(@PathVariable int productId) {
+		ProductService.deleteProductById(productId);
+	}
+}

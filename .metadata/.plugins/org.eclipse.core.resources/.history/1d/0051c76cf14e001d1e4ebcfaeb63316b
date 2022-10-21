@@ -1,0 +1,62 @@
+package com.example.demo.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.entity.Course;
+import com.example.demo.entity.Student;
+import com.example.demo.service.CourseService;
+import com.example.demo.service.StudentService;
+
+@RestController
+public class StudentController {
+	@Autowired
+	private StudentService service;
+	@Autowired
+	private CourseService cservice;
+
+	@GetMapping("/getstudent")
+	public List<Student> getStudents() {
+		return service.listAll();
+	}
+
+	@PostMapping("/addStudentData/{courseId}")
+	public String addStudent(@RequestBody Student student, @PathVariable int courseId) {
+		Course course = this.cservice.getCourseById(courseId);
+		student.setCourse(course);
+
+		this.service.addStudentData(student);
+		return "Student Added Succesfully";
+	}
+
+	@GetMapping("/getStudent/{id}")
+	public Student searchById(@PathVariable("id") int id) {
+		return service.searchStudentById(id);
+	}
+
+	@DeleteMapping("/student/{id}")
+	public String deleteStudentById(@PathVariable("id") int id) {
+		service.deleteStudentById(id);
+		return "Student Deletely Succesfully";
+	}
+
+	
+	@PutMapping("/student/{id}")
+	public String updateStudentById(@PathVariable int id,@RequestBody Student student) {
+		service.updateStudent(id, student);
+		return "Student Record updated";
+	}
+	@GetMapping("/search/{studname}")
+	public Student searchName(@PathVariable String firstname){
+		 return this.service.searchByName(firstname);
+		
+	}
+}

@@ -1,0 +1,54 @@
+package com.example.demo.controller;
+
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.entity.Course;
+import com.example.demo.service.CourseService;
+
+@RestController
+
+public class CourseController {
+
+	@Autowired
+	private CourseService courseService;
+
+	@GetMapping("/getcourse")
+	public List<Course> getCourse() {
+		return courseService.displayCourses();
+	}
+
+	@PostMapping("/addcourse")
+	public String addCourseData(@RequestBody Course course) {
+		courseService.addCourse(course);
+
+		return "Course Data added Succesfully.";
+	}
+
+	
+	@GetMapping("/coursebyid/{courseId}")
+	public Course searchById(@PathVariable("courseId") int courseId) {
+		return courseService.getCourseById(courseId);
+	}
+	
+	@DeleteMapping("/deletebyid/{courseId}")
+	public String deleteById(@PathVariable ("courseId ") int courseId) {
+		courseService.deleteCourse(courseId);
+		return "Course Deleted Successfully";
+	}
+
+	@PutMapping("/course/{courseId}")
+	public String updateCourseById(@PathVariable int courseId,@RequestBody Course course) {
+		courseService.updateCourse(courseId, course);
+		return "Student Record updated";
+	}
+}

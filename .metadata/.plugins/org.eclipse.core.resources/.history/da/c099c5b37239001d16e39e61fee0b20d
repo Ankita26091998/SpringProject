@@ -1,0 +1,35 @@
+package com.spring.demo;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class ProductService {
+
+	private static int index = 3 ;
+
+
+private static Map<Integer,Product> productMap=new HashMap<>();
+static {
+Product p1 =new Product(101, "Soap", 20);
+Product p2 =new Product(201, "Oil", 120);
+Product p3 =new Product(301, "Fashwash", 200);
+productMap.put(1, p1);
+productMap.put(2, p2);
+productMap.put(3, p3);
+}
+public static List<Product> getProductData() {
+	return new ArrayList<>(productMap.values());
+}
+public static Product getProductDataById(int id) {
+	return productMap.get(id);
+}
+
+//public static Product getProductDataByName(String name) {
+//	return productMap.get(name);
+//}
+
+
+}
